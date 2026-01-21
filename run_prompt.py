@@ -4,7 +4,7 @@ from google import genai
 from google.genai import types
 
 
-GEMINI_API_KEY="AIzaSyD90ojhHgfumA4ygmbjp47Rjrpoh6sWVgA"
+
 # To run this code you need to install the following dependencies:
 # pip install google-genai
 
