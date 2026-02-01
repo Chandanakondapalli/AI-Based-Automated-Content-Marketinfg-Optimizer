@@ -1,6 +1,4 @@
 from api import flask_app
 
+# Export the WSGI app for gunicorn
 app = flask_app
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8000, debug=False)
