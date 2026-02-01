@@ -4,7 +4,7 @@ tweepy
 pandas
 requests
 textblob
-google-generativeai
+google-genai
 Flask
 flask-cors
 gunicorn
