@@ -1,6 +1,6 @@
 import json
 import tweepy
-from run_prompt import execute_gemini
+from run_prompt import execute_gemini_for_tweets
 
 API_KEY = "AIzaSyDlkxxjJmbjAHLF3_rfb4NgNiksbMrm2yc"
 API_SECRET_KEY = "181hPlUZWDRVZjYRrkHEQhZqGRv1P7PAs7G16lRuBdISsuLeZ1"
@@ -17,21 +17,31 @@ twitterClient = tweepy.Client(
     wait_on_rate_limit=True,
 )
 
-user = twitterClient.get_user(username="sundarpichai")
-print(user.data.id)
-su_id = user.data.id
-tweets = twitterClient.get_users_tweets(su_id, max_results=50, tweet_fields=['created_at', 'public_metrics', 'text'])
 
-# print(tweets.data)
-
-# for tweet in tweets.data:
-#     print(tweet.text)
-#     prompt=f"""Summarize the twitter tweet attached and give it a sentimental analysis score
-#     TWEET=>{tweet.text}
-#     """
-#     llm_out=execute_gemini(prompt)
-#     print(llm_out)
+def create_tweet(prompt):
+    """Create a tweet based on the given prompt using Gemini AI"""
+    try:
+        result = execute_gemini_for_tweets(prompt)
+        return json.loads(result)
+    except Exception as e:
+        return {
+            "tweet": "",
+            "prediction": "error",
+            "explanation": str(e)
+        }
 
 
-with open("extracted_tweets.json", "w") as json_file:
-    json.dump([tweet.data for tweet in tweets.data], json_file, indent=4)
+def extract_tweets_from_user(username="sundarpichai"):
+    """Extract tweets from a specific Twitter user"""
+    user = twitterClient.get_user(username=username)
+    user_id = user.data.id
+    tweets = twitterClient.get_users_tweets(user_id, max_results=50, tweet_fields=['created_at', 'public_metrics', 'text'])
+    
+    with open("extracted_tweets.json", "w") as json_file:
+        json.dump([tweet.data for tweet in tweets.data], json_file, indent=4)
+    
+    return tweets.data
+
+
+if __name__ == "__main__":
+    extract_tweets_from_user()
