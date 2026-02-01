@@ -6,3 +6,5 @@ requests
 textblob
 genai
 Flask
+flask-cors
+gunicorn
