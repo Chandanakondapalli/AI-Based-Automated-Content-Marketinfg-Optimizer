@@ -1,0 +1,8 @@
+streamlit
+openai
+tweepy
+pandas
+requests
+textblob
+genai
+Flask
