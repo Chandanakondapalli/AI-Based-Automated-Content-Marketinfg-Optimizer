@@ -1,10 +1,10 @@
 streamlit
-openai
+openai>=1.0.0
 tweepy
 pandas
 requests
 textblob
-genai
+google-generativeai
 Flask
 flask-cors
 gunicorn
